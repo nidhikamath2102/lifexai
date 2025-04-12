@@ -43,7 +43,7 @@ export const categorizePurchase = (
   let category = TransactionCategory.OTHER;
   
   // If merchant is provided, use its category to determine the transaction category
-  if (merchant) {
+  if (merchant && merchant.category && typeof merchant.category === 'string') {
     switch (merchant.category.toLowerCase()) {
       case 'food':
       case 'restaurant':

@@ -48,12 +48,18 @@ const AccountSummary: React.FC<AccountSummaryProps> = ({ account, customer }) =>
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="text-gray-600">Account Type:</span>
-              <span className="font-medium">{getAccountTypeDisplay(account.type)}</span>
+              <span className="font-medium">
+                {typeof account.type === 'string'
+                  ? getAccountTypeDisplay(account.type)
+                  : account.type}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Account Number:</span>
               <span className="font-medium">
-                {account.account_number.replace(/(\d{4})/g, '$1 ').trim()}
+                {typeof account.account_number === 'string' 
+                  ? account.account_number.replace(/(\d{4})/g, '$1 ').trim()
+                  : account.account_number}
               </span>
             </div>
             <div className="flex justify-between">
@@ -62,7 +68,11 @@ const AccountSummary: React.FC<AccountSummaryProps> = ({ account, customer }) =>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Rewards Points:</span>
-              <span className="font-medium">{account.rewards.toLocaleString()}</span>
+              <span className="font-medium">
+                {typeof account.rewards === 'number' 
+                  ? account.rewards.toLocaleString() 
+                  : account.rewards}
+              </span>
             </div>
           </div>
         </div>
@@ -71,7 +81,9 @@ const AccountSummary: React.FC<AccountSummaryProps> = ({ account, customer }) =>
           <h3 className="text-lg font-medium mb-2">Balance Information</h3>
           <div className="bg-blue-50 p-4 rounded-lg">
             <div className="text-3xl font-bold text-blue-700 mb-2">
-              {formatCurrency(account.balance)}
+              {typeof account.balance === 'number'
+                ? formatCurrency(account.balance)
+                : account.balance}
             </div>
             <div className="text-sm text-blue-600">Current Balance</div>
           </div>

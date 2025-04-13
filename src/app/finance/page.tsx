@@ -3,14 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAuth } from '../../contexts/AuthContext';
-import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
+import { useAuthModal } from '@/components/auth/AuthModalController';
 import { 
   getCustomerById,
   getCustomerAccounts,
   getAccountPurchases, 
   getMerchants 
-} from '../../api/nessieApi';
+} from '@/api/nessieApi';
 import { 
   categorizePurchase, 
   calculateSpendingByCategory,
@@ -19,16 +19,16 @@ import {
   identifyRecurringExpenses,
   calculateFinancialHealthScore,
   CategorizedPurchase
-} from '../../utils/financeUtils';
+} from '@/utils/financeUtils';
 
 // Components
-import AccountSummary from '../../components/finance/AccountSummary';
-import TransactionList from '../../components/finance/TransactionList';
-import SpendingCategoryChart from '../../components/finance/SpendingCategoryChart';
-import SpendingTrendsChart from '../../components/finance/SpendingTrendsChart';
-import FinancialHealthScore from '../../components/finance/FinancialHealthScore';
-import AnomalyDetection from '../../components/finance/AnomalyDetection';
-import RecurringExpenses from '../../components/finance/RecurringExpenses';
+import AccountSummary from '@/components/finance/AccountSummary';
+import TransactionList from '@/components/finance/TransactionList';
+import SpendingCategoryChart from '@/components/finance/SpendingCategoryChart';
+import SpendingTrendsChart from '@/components/finance/SpendingTrendsChart';
+import FinancialHealthScore from '@/components/finance/FinancialHealthScore';
+import AnomalyDetection from '@/components/finance/AnomalyDetection';
+import RecurringExpenses from '@/components/finance/RecurringExpenses';
 
 export default function FinancePage() {
   const [selectedAccountId, setSelectedAccountId] = useState<string | null>(null);
@@ -36,14 +36,18 @@ export default function FinancePage() {
   const [activeView, setActiveView] = useState<'dashboard' | 'transactions' | 'insights'>('dashboard');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const { isAuthenticated, customerId } = useAuth();
-  const router = useRouter();
+  const { openAuthModal } = useAuthModal();
   
-  // Redirect to login if not authenticated
+  // Open auth modal if not authenticated, but only if not redirected from logout
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
+    // Only open auth modal on initial load if not authenticated
+    if (isInitialLoad && !isAuthenticated) {
+      openAuthModal();
     }
-  }, [isAuthenticated, router]);
+    setIsInitialLoad(false);
+  }, [isAuthenticated, openAuthModal, isInitialLoad]);
   
   // Use customerId from AuthContext
   

@@ -1,6 +1,24 @@
-import Link from "next/link";
+'use client';
+
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { useAuthModal } from "@/components/auth/AuthModalController";
 
 export default function Home() {
+  const { isAuthenticated } = useAuth();
+  const { openAuthModal } = useAuthModal();
+  const router = useRouter();
+
+  const handleExploreFinance = () => {
+    if (isAuthenticated) {
+      router.push('/finance');
+    } else {
+      openAuthModal(() => {
+        router.push('/finance');
+      });
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-4xl mx-auto">
@@ -41,12 +59,12 @@ export default function Home() {
             <p className="text-gray-600 mb-4">
               Our financial dashboard helps you track your spending, detect unusual transactions, and manage your subscriptions.
             </p>
-            <Link 
-              href="/finance" 
+            <button 
+              onClick={handleExploreFinance}
               className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
             >
               Explore Finance Features
-            </Link>
+            </button>
           </div>
           
           <div className="bg-green-50 rounded-lg p-6 shadow-md">

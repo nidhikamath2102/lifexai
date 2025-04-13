@@ -47,24 +47,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Save auth state to localStorage when it changes
   useEffect(() => {
-    // Only update localStorage if all values are defined and isAuthenticated has changed
+    // Only update localStorage if all values are defined
     const shouldUpdate = isAuthenticated && username && customerId;
     
     if (shouldUpdate) {
       localStorage.setItem('username', username);
       localStorage.setItem('customerId', customerId);
+      console.log('Auth state saved to localStorage:', { username, customerId });
     } else if (!isAuthenticated) {
       localStorage.removeItem('username');
       localStorage.removeItem('customerId');
+      console.log('Auth state removed from localStorage');
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, username, customerId]);
 
   const login = async (username: string, password: string) => {
     try {
       const response = await authenticateUser(username, password);
+      
+      // Update state
       setUsername(response.username);
       setCustomerId(response.customer_id);
       setIsAuthenticated(true);
+      
+      // Immediately save to localStorage
+      localStorage.setItem('username', response.username);
+      localStorage.setItem('customerId', response.customer_id);
+      console.log('Auth state saved to localStorage after login:', { 
+        username: response.username, 
+        customerId: response.customer_id 
+      });
 
       // Fetch customer accounts using the customer_id from Nessie API
       try {
@@ -85,9 +97,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signup = async (username: string, email: string, password: string) => {
     try {
       const response = await registerUser(username, email, password);
+      
+      // Update state
       setUsername(response.username);
       setCustomerId(response.customer_id);
       setIsAuthenticated(true);
+      
+      // Immediately save to localStorage
+      localStorage.setItem('username', response.username);
+      localStorage.setItem('customerId', response.customer_id);
+      console.log('Auth state saved to localStorage after signup:', { 
+        username: response.username, 
+        customerId: response.customer_id 
+      });
 
       // New users won't have accounts yet, so initialize with empty array
       setAccounts([]);
@@ -97,10 +119,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = () => {
+    // Update state
     setIsAuthenticated(false);
     setUsername(null);
     setCustomerId(null);
     setAccounts([]);
+    
+    // Immediately remove from localStorage
+    localStorage.removeItem('username');
+    localStorage.removeItem('customerId');
+    console.log('Auth state removed from localStorage after logout');
   };
 
   return (

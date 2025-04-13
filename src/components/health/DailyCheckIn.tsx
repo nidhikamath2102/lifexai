@@ -65,8 +65,8 @@ export default function DailyCheckIn() {
       
       setStep(1);
     },
-    onError: (error) => {
-      console.error('Error saving health log:', error);
+    onError: (err) => {
+      console.error('Error saving health log:', err);
     }
   });
   
@@ -86,7 +86,7 @@ export default function DailyCheckIn() {
         ...formData,
         user_id: customerId
       });
-    } catch (error) {
+    } catch {
       // Error is handled in the mutation's onError
     } finally {
       setIsSubmitting(false);

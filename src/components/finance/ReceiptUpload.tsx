@@ -1,10 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import Image from 'next/image';
 import { Account, Merchant, CreatePurchaseRequest } from '@/types/nessie';
-import { createPurchase } from '@/api/nessieApi';
+import { useAuthNessieApi } from '@/api/authNessieApi';
+import { useAuth } from '@/contexts/AuthContext';
+import { useAuthModal } from '@/components/auth/AuthModalController';
 
 interface ReceiptUploadProps {
   accounts: Account[];
@@ -19,6 +22,19 @@ const ReceiptUpload: React.FC<ReceiptUploadProps> = ({
   selectedAccountId,
   onTransactionComplete
 }) => {
+  // Get authentication context
+  const { isAuthenticated } = useAuth();
+  const { openAuthModal } = useAuthModal();
+  
+  // Check authentication on component mount
+  useEffect(() => {
+    if (!isAuthenticated) {
+      openAuthModal(() => {
+        // This callback will be called after successful authentication
+        console.log('Authentication successful, continuing with receipt upload');
+      });
+    }
+  }, [isAuthenticated, openAuthModal]);
   // State for form fields
   const [merchantName, setMerchantName] = useState('');
   const [amount, setAmount] = useState('');
@@ -39,6 +55,16 @@ const ReceiptUpload: React.FC<ReceiptUploadProps> = ({
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      setError('Please log in to analyze receipts');
+      openAuthModal(() => {
+        // After successful authentication, try again
+        handleFileChange(e);
+      });
+      return;
+    }
     
     try {
       setIsAnalyzing(true);
@@ -100,6 +126,9 @@ const ReceiptUpload: React.FC<ReceiptUploadProps> = ({
     return merchant?._id || null;
   };
   
+  // Get authenticated Nessie API
+  const authNessieApi = useAuthNessieApi();
+  
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,7 +145,7 @@ const ReceiptUpload: React.FC<ReceiptUploadProps> = ({
       // Find merchant ID
       const merchantId = findMerchantId(merchantName);
       if (!merchantId) {
-        throw new Error(`No merchant found matching "${merchantName}"`);
+        throw new Error(`No merchant found matching &quot;${merchantName}&quot;`);
       }
       
       // Create purchase data
@@ -128,8 +157,15 @@ const ReceiptUpload: React.FC<ReceiptUploadProps> = ({
         description
       };
       
-      // Submit purchase
-      await createPurchase(accountId, purchaseData);
+      // Submit purchase using authenticated API
+      const result = await authNessieApi.createPurchase(accountId, purchaseData);
+      
+      // If result is null, it means the user is not authenticated
+      if (!result) {
+        setError('Authentication required. Please try again after logging in.');
+        setIsSubmitting(false);
+        return;
+      }
       
       // Show success message
       setSuccess('Receipt transaction added successfully!');
@@ -162,7 +198,7 @@ const ReceiptUpload: React.FC<ReceiptUploadProps> = ({
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-xl font-semibold mb-4">Upload Receipt</h2>
       <p className="text-gray-600 mb-4">
-        Upload a receipt image and we'll automatically extract the details using AI.
+        Upload a receipt image and we&apos;ll automatically extract the details using AI.
       </p>
       
       {error && (
@@ -202,11 +238,14 @@ const ReceiptUpload: React.FC<ReceiptUploadProps> = ({
                     <p className="text-sm text-gray-500">Analyzing receipt with AI...</p>
                   </div>
                 ) : previewUrl ? (
-                  <img 
-                    src={previewUrl} 
-                    alt="Receipt preview" 
-                    className="h-24 object-contain"
-                  />
+                  <div className="h-24 relative w-full">
+                    <Image 
+                      src={previewUrl} 
+                      alt="Receipt preview" 
+                      className="object-contain"
+                      fill
+                    />
+                  </div>
                 ) : (
                   <>
                     <svg className="w-8 h-8 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -337,7 +376,7 @@ const ReceiptUpload: React.FC<ReceiptUploadProps> = ({
       
       <div className="mt-4 text-sm text-gray-500">
         <p>
-          * Required fields. Upload a receipt image and we'll use AI to extract the details, or enter them manually.
+          * Required fields. Upload a receipt image and we&apos;ll use AI to extract the details, or enter them manually.
           The transaction will be categorized automatically based on the merchant and description.
         </p>
       </div>

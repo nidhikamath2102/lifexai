@@ -39,12 +39,18 @@ export default function FinancePage() {
   const { isAuthenticated, customerId } = useAuth();
   const { openAuthModal } = useAuthModal();
   
-  // Open auth modal if not authenticated, but only if not redirected from logout
+  // Open auth modal if not authenticated, but only on initial load
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   
   useEffect(() => {
-    // Only open auth modal on initial load if not authenticated
-    if (isInitialLoad && !isAuthenticated) {
+    // Check if user is already authenticated from localStorage
+    const storedUsername = localStorage.getItem('username');
+    const storedCustomerId = localStorage.getItem('customerId');
+    const isStoredAuth = !!(storedUsername && storedCustomerId);
+    
+    // Only open auth modal on initial load if not authenticated and no stored auth
+    if (isInitialLoad && !isAuthenticated && !isStoredAuth) {
+      console.log('Opening auth modal on initial load - no stored auth found');
       openAuthModal();
     }
     setIsInitialLoad(false);

@@ -3,7 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Account } from '../../types/nessie';
-import { createTransfer } from '../../api/nessieApi';
+import { useAuthNessieApi } from '@/api/authNessieApi';
+import { useAuth } from '@/contexts/AuthContext';
+import { useAuthModal } from '@/components/auth/AuthModalController';
 
 interface PayBillModalProps {
   isOpen: boolean;
@@ -22,6 +24,9 @@ const PayBillModal: React.FC<PayBillModalProps> = ({
   onPaymentComplete,
   isDarkMode
 }) => {
+  // Get authentication context
+  const { isAuthenticated } = useAuth();
+  const { openAuthModal } = useAuthModal();
   const [amount, setAmount] = useState<string>('');
   const [targetAccountId, setTargetAccountId] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -47,8 +52,16 @@ const PayBillModal: React.FC<PayBillModalProps> = ({
       setError(null);
       setSuccess(false);
       setIsLoading(false);
+      
+      // Check authentication when modal opens
+      if (!isAuthenticated) {
+        openAuthModal(() => {
+          // This callback will be called after successful authentication
+          console.log('Authentication successful, continuing with bill payment');
+        });
+      }
     }
-  }, [isOpen]);
+  }, [isOpen, isAuthenticated, openAuthModal]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Only allow numbers and decimal points
@@ -56,6 +69,9 @@ const PayBillModal: React.FC<PayBillModalProps> = ({
     setAmount(value);
   };
 
+  // Get authenticated Nessie API
+  const authNessieApi = useAuthNessieApi();
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -92,8 +108,15 @@ const PayBillModal: React.FC<PayBillModalProps> = ({
         description: `Payment from ${selectedAccount.type} to Credit Card`
       };
       
-      // Create the transfer (payment)
-      await createTransfer(selectedAccount._id, transferData);
+      // Create the transfer (payment) using authenticated API
+      const result = await authNessieApi.createTransfer(selectedAccount._id, transferData);
+      
+      // If result is null, it means the user is not authenticated
+      if (!result) {
+        setError('Authentication required. Please try again after logging in.');
+        setIsLoading(false);
+        return;
+      }
       
       // Note: The Nessie API doesn't automatically update account balances in the UI
       // We'll manually update the UI by triggering a refresh

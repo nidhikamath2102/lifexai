@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import { generateHealthFinanceInsights } from '@/utils/healthUtils';
 import { categorizePurchase, CategorizedPurchase } from '@/utils/financeUtils';
 import { Purchase, Merchant } from '@/types/nessie';
@@ -9,7 +9,7 @@ import { HealthLog } from '@/api/healthApi';
 const uri = process.env.MONGODB_URI || "";
 const client = new MongoClient(uri);
 const dbName = 'userDatabase';
-const healthLogsCollection = 'health_logs';
+// const healthLogsCollection = 'health_logs'; // Not used at this level
 const insightsCollection = 'user_insights';
 
 // GET /api/health/insights?userId=123

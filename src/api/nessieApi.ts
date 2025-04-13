@@ -1,6 +1,5 @@
 import axios from 'axios';
 // These types are used in function signatures and return types
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {
   Account,
   CreateAccountRequest,

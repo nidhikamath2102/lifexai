@@ -47,14 +47,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Save auth state to localStorage when it changes
   useEffect(() => {
-    if (isAuthenticated && username && customerId) {
+    // Only update localStorage if all values are defined and isAuthenticated has changed
+    const shouldUpdate = isAuthenticated && username && customerId;
+    
+    if (shouldUpdate) {
       localStorage.setItem('username', username);
       localStorage.setItem('customerId', customerId);
-    } else {
+    } else if (!isAuthenticated) {
       localStorage.removeItem('username');
       localStorage.removeItem('customerId');
     }
-  }, [isAuthenticated, username, customerId]);
+  }, [isAuthenticated]);
 
   const login = async (username: string, password: string) => {
     try {

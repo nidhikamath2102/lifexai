@@ -73,7 +73,7 @@ const SpendingCategoryChart: React.FC<SpendingCategoryChartProps> = ({
           label: (tooltipItem: TooltipItem<'pie'>) => {
             const label = tooltipItem.label || '';
             const value = tooltipItem.raw as number || 0;
-            const percentage = tooltipItem.parsed as number || 0;
+            const percentage = tooltipItem.parsed || 0;
             return `${label}: ${formatCurrency(value)} (${percentage.toFixed(1)}%)`;
           },
         },

@@ -9,7 +9,7 @@ import {
   getCustomerById,
   getCustomerAccounts,
   getAccountPurchases, 
-  getMerchants 
+  getMerchants
 } from '@/api/nessieApi';
 import { 
   categorizePurchase, 

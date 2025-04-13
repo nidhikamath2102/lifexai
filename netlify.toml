@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20.11.1"  # Latest LTS version as of my knowledge
+  PYTHON_VERSION = "3.11.8"  # Latest stable Python 3.11 version as of my knowledge

@@ -166,18 +166,28 @@ export const generateHealthFinanceInsights = (
   healthLogs: HealthLog[], 
   transactions: CategorizedPurchase[]
 ): UserInsight => {
-  // Default insight if no data
-  if (healthLogs.length === 0 || transactions.length === 0) {
+  // Get user ID from healthLogs if available
+  const userId = healthLogs.length > 0 ? healthLogs[0].user_id : '';
+  const currentDate = new Date().toISOString();
+  const recommendations: string[] = [];
+
+  // Initialize default summaries
+  let healthSummary = "Not enough health data to generate insights.";
+  let financialSummary = "Not enough financial data to generate insights.";
+
+  // If no health data, return basic default insights
+  if (healthLogs.length === 0) {
+    recommendations.push("Start logging your daily health to get personalized insights.");
     return {
-      user_id: healthLogs.length > 0 ? healthLogs[0].user_id : '',
-      week_of: new Date().toISOString(),
-      health_summary: "Not enough health data to generate insights.",
-      financial_summary: "Not enough financial data to generate insights.",
-      recommendations: ["Start logging your daily health to get personalized insights."]
+      user_id: userId,
+      week_of: currentDate,
+      health_summary: healthSummary,
+      financial_summary: financialSummary,
+      recommendations
     };
   }
-  
-  // Sort logs by date (most recent first)
+
+  // Process health logs - we have health data at this point
   const sortedLogs = [...healthLogs].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   const recentLogs = sortedLogs.slice(0, 7); // Last 7 days
   
@@ -187,6 +197,142 @@ export const generateHealthFinanceInsights = (
   const avgExercise = calculateAverageExercise(recentLogs);
   const moodScore = calculateMoodScore(recentLogs);
   
+  // Build a more detailed health summary with insights
+  healthSummary = `Your overall health score is ${healthScore}/100. `;
+  
+  // Add categorization of health score
+  if (healthScore >= 85) {
+    healthSummary += `This is excellent! You're in the top tier of health metrics. `;
+  } else if (healthScore >= 70) {
+    healthSummary += `This is a good score, indicating positive health habits. `;
+  } else if (healthScore >= 50) {
+    healthSummary += `This is an average score with room for improvement. `;
+  } else {
+    healthSummary += `This score suggests your health habits need attention. `;
+  }
+  
+  // Add trend analysis if we have enough logs
+  if (recentLogs.length >= 3) {
+    const oldestScore = calculateHealthScore([recentLogs[recentLogs.length - 1]]);
+    const newestScore = calculateHealthScore([recentLogs[0]]);
+    const scoreDiff = newestScore - oldestScore;
+    
+    if (Math.abs(scoreDiff) >= 5) {
+      if (scoreDiff > 0) {
+        healthSummary += `Your health score has been improving recently. Keep up the good work! `;
+      } else {
+        healthSummary += `Your health score has been declining recently. Let's focus on improving key areas. `;
+      }
+    }
+  }
+  
+  // Enhanced sleep insights and recommendations
+  if (avgSleep < 6) {
+    healthSummary += `You're averaging only ${avgSleep.toFixed(1)} hours of sleep, which is significantly below the recommended amount. `;
+    recommendations.push("Aim for 7-8 hours of sleep each night to improve overall health and cognitive function.");
+    recommendations.push("Create a consistent sleep schedule, going to bed and waking up at the same time daily.");
+    recommendations.push("Avoid screens and caffeine at least 1 hour before bedtime.");
+  } else if (avgSleep < 7) {
+    healthSummary += `You're averaging ${avgSleep.toFixed(1)} hours of sleep, which is slightly below ideal. `;
+    recommendations.push("Try to increase your sleep to 7-8 hours each night for optimal health.");
+    recommendations.push("Consider a relaxing bedtime routine to improve sleep quality.");
+  } else if (avgSleep > 9) {
+    healthSummary += `You're sleeping ${avgSleep.toFixed(1)} hours on average, which is above the typical recommendation. `;
+    recommendations.push("While rest is important, excessive sleep (>9 hours) may indicate other health issues.");
+    recommendations.push("Ensure your sleep quality is good, as quantity alone doesn't guarantee restful sleep.");
+  } else {
+    healthSummary += `You're getting a healthy ${avgSleep.toFixed(1)} hours of sleep on average. `;
+    recommendations.push("Continue maintaining your excellent sleep habits.");
+  }
+  
+  // Enhanced exercise insights and detailed recommendations
+  if (avgExercise < 10) {
+    healthSummary += `Your exercise level is very low at ${avgExercise.toFixed(1)} minutes per day. `;
+    recommendations.push("Start with short 10-minute walks daily and gradually increase duration.");
+    recommendations.push("Consider activities you enjoy - dancing, swimming, or cycling - to make exercise more appealing.");
+    recommendations.push("Even brief movement breaks throughout the day can significantly improve your health.");
+  } else if (avgExercise < 20) {
+    healthSummary += `You're exercising ${avgExercise.toFixed(1)} minutes per day, which is below recommendations. `;
+    recommendations.push("Aim to increase your activity to at least 30 minutes daily for better cardiovascular health.");
+    recommendations.push("Try mixing different exercise types for better overall fitness (cardio, strength, flexibility).");
+  } else if (avgExercise < 30) {
+    healthSummary += `You're exercising ${avgExercise.toFixed(1)} minutes daily, which is good but could be improved. `;
+    recommendations.push("You're on the right track with exercise. Consider increasing to 30-45 minutes for optimal benefits.");
+  } else if (avgExercise > 90) {
+    healthSummary += `You exercise extensively (${avgExercise.toFixed(1)} minutes daily). `;
+    recommendations.push("Ensure you're allowing adequate recovery time between intense workouts.");
+    recommendations.push("Consider incorporating rest days and varying intensity to prevent overtraining.");
+  } else {
+    healthSummary += `You're maintaining an excellent exercise routine with ${avgExercise.toFixed(1)} minutes per day. `;
+    recommendations.push("Your exercise habits are excellent. Consider varying your routine to work different muscle groups.");
+  }
+  
+  // Enhanced mood insights with more detailed recommendations
+  if (moodScore < 2) {
+    healthSummary += `Your mood has been significantly lower than optimal. `;
+    recommendations.push("Consider speaking with a mental health professional about your persistent low mood.");
+    recommendations.push("Practice daily mindfulness meditation to help manage negative emotions.");
+    recommendations.push("Ensure you're getting enough sunlight, which can impact mood significantly.");
+  } else if (moodScore < 2.5) {
+    healthSummary += `Your mood has been lower than optimal. `;
+    recommendations.push("Regular physical activity can help improve mood through the release of endorphins.");
+    recommendations.push("Consider keeping a gratitude journal to focus on positive aspects of your life.");
+  } else if (moodScore < 3.5) {
+    healthSummary += `Your mood has been neutral overall. `;
+    recommendations.push("Try incorporating activities you enjoy into your daily routine to boost mood.");
+  } else {
+    healthSummary += `Your mood has been consistently positive, which is excellent for overall wellbeing. `;
+    recommendations.push("Continue the habits that are contributing to your positive outlook.");
+  }
+  
+  // Add correlations between health factors if data supports it
+  if (recentLogs.length >= 5) {
+    // Sleep-mood correlation
+    const highSleepLogs = recentLogs.filter(log => log.sleep_hours >= 7);
+    const lowSleepLogs = recentLogs.filter(log => log.sleep_hours < 7);
+    
+    if (highSleepLogs.length >= 2 && lowSleepLogs.length >= 2) {
+      const highSleepMood = calculateMoodScore(highSleepLogs);
+      const lowSleepMood = calculateMoodScore(lowSleepLogs);
+      
+      if (highSleepMood - lowSleepMood > 0.5) {
+        healthSummary += `We've noticed that your mood tends to be better on days when you get more sleep. `;
+        recommendations.push("Prioritize sleep to help maintain a more positive mood.");
+      }
+    }
+    
+    // Exercise-mood correlation
+    const highExerciseLogs = recentLogs.filter(log => log.exercise_minutes >= 30);
+    const lowExerciseLogs = recentLogs.filter(log => log.exercise_minutes < 10);
+    
+    if (highExerciseLogs.length >= 2 && lowExerciseLogs.length >= 2) {
+      const highExerciseMood = calculateMoodScore(highExerciseLogs);
+      const lowExerciseMood = calculateMoodScore(lowExerciseLogs);
+      
+      if (highExerciseMood - lowExerciseMood > 0.5) {
+        healthSummary += `Your data shows a positive relationship between exercise and mood. `;
+        recommendations.push("Continue using exercise as a tool to maintain positive mental health.");
+      }
+    }
+  }
+
+  // If no financial data, return just health insights
+  if (transactions.length === 0) {
+    if (recommendations.length === 0) {
+      recommendations.push("Continue maintaining your healthy lifestyle.");
+      recommendations.push("Consider tracking your water intake for better hydration.");
+    }
+    
+    return {
+      user_id: userId,
+      week_of: currentDate,
+      health_summary: healthSummary,
+      financial_summary: financialSummary,
+      recommendations
+    };
+  }
+  
+  // Process financial data - we have both health and financial data at this point
   // Analyze financial data
   const foodDeliveryExpenses = transactions.filter(t => 
     t.category === TransactionCategory.FOOD && 
@@ -203,32 +349,8 @@ export const generateHealthFinanceInsights = (
     t.description.toLowerCase().includes('fitness')
   );
   
-  // Generate insights
-  let healthSummary = `Your health score is ${healthScore}/100. `;
-  let financialSummary = "";
-  const recommendations: string[] = [];
-  
-  // Health insights
-  if (avgSleep < 7) {
-    healthSummary += `You're averaging only ${avgSleep.toFixed(1)} hours of sleep. `;
-    recommendations.push("Try to get 7-8 hours of sleep each night for better health.");
-  } else {
-    healthSummary += `You're getting a healthy ${avgSleep.toFixed(1)} hours of sleep on average. `;
-  }
-  
-  if (avgExercise < 20) {
-    healthSummary += `You're only exercising ${avgExercise.toFixed(1)} minutes per day on average. `;
-    recommendations.push("Aim for at least 20-30 minutes of exercise daily.");
-  } else {
-    healthSummary += `You're maintaining a good exercise routine with ${avgExercise.toFixed(1)} minutes per day. `;
-  }
-  
-  if (moodScore < 2.5) {
-    healthSummary += `Your mood has been lower than optimal. `;
-    recommendations.push("Consider speaking with a mental health professional about your mood.");
-  } else if (moodScore >= 3.5) {
-    healthSummary += `Your mood has been consistently positive. `;
-  }
+  // Build financial summary
+  financialSummary = "";
   
   // Financial insights related to health
   if (foodDeliveryExpenses.length > 0) {
@@ -261,8 +383,8 @@ export const generateHealthFinanceInsights = (
   }
   
   return {
-    user_id: healthLogs[0].user_id,
-    week_of: new Date().toISOString(),
+    user_id: userId,
+    week_of: currentDate,
     health_summary: healthSummary,
     financial_summary: financialSummary,
     recommendations

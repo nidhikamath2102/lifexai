@@ -1,8 +1,12 @@
 'use client';
 
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '../../contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 import { 
   getCustomerById,
   getCustomerAccounts,
@@ -33,9 +37,17 @@ export default function FinancePage() {
   const [categorizedPurchases, setCategorizedPurchases] = useState<CategorizedPurchase[]>([]);
   const [activeView, setActiveView] = useState<'dashboard' | 'transactions' | 'insights'>('dashboard');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const { isAuthenticated, customerId } = useAuth();
+  const router = useRouter();
   
-  // Customer ID
-  const customerId = '66235a8f9683f20dd51899d5';
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login');
+    }
+  }, [isAuthenticated, router]);
+  
+  // Use customerId from AuthContext
   
   // Fetch specific customer
   const { 
@@ -44,7 +56,8 @@ export default function FinancePage() {
     error: customerError
   } = useQuery({
     queryKey: ['customer', customerId],
-    queryFn: () => getCustomerById(customerId)
+    queryFn: () => customerId ? getCustomerById(customerId) : Promise.resolve(null),
+    enabled: !!customerId
   });
   
   // Fetch accounts for specific customer
@@ -54,7 +67,8 @@ export default function FinancePage() {
     error: accountsError
   } = useQuery({
     queryKey: ['customerAccounts', customerId],
-    queryFn: () => getCustomerAccounts(customerId)
+    queryFn: () => customerId ? getCustomerAccounts(customerId) : Promise.resolve([]),
+    enabled: !!customerId
   });
   
   // Fetch merchants
@@ -439,7 +453,7 @@ export default function FinancePage() {
               <div className="lg:col-span-2">
               <AccountSummary 
                 account={selectedAccount} 
-                customer={customer}
+                customer={customer || undefined}
                 accounts={accounts || []}
                 onTransactionComplete={() => {
                   // Refetch accounts and purchases when a transaction is completed

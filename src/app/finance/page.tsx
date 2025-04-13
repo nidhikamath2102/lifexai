@@ -272,9 +272,11 @@ export default function FinancePage() {
               </motion.div>
               <div>
                 <h1 className="text-2xl font-bold">LifexAI Finance</h1>
-                <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                  {customer ? `Welcome, ${customer.first_name} ${customer.last_name}` : 'Welcome to your financial dashboard'}
-                </p>
+                {isAuthenticated && (
+                  <div className={`text-sm ${isDarkMode ? 'text-blue-300' : 'text-blue-600'} font-medium`}>
+                    {customer ? `Welcome, ${customer.first_name} ${customer.last_name}` : 'Welcome to your dashboard'}
+                  </div>
+                )}
               </div>
             </div>
             
@@ -471,7 +473,10 @@ export default function FinancePage() {
               
               {/* Financial Health Score */}
               <div>
-                <FinancialHealthScore score={financialHealthScore} />
+                <FinancialHealthScore 
+                  score={financialHealthScore} 
+                  isLoading={isLoadingCustomer || isLoadingAccounts || isLoadingPurchases}
+                />
               </div>
               
               {/* Spending by Category */}

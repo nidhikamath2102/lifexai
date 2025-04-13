@@ -102,6 +102,46 @@ export interface CreateTransferRequest {
   description: string;
 }
 
+// Deposit types
+export interface Deposit {
+  _id: string;
+  type: string;
+  transaction_date: string;
+  status: string;
+  medium: string;
+  payee_id: string;
+  amount: number;
+  description: string;
+}
+
+export interface CreateDepositRequest {
+  medium: string;
+  transaction_date: string;
+  status: string;
+  amount: number;
+  description: string;
+}
+
+// Withdrawal types
+export interface Withdrawal {
+  _id: string;
+  type: string;
+  transaction_date: string;
+  status: string;
+  medium: string;
+  payer_id: string;
+  amount: number;
+  description: string;
+}
+
+export interface CreateWithdrawalRequest {
+  medium: string;
+  transaction_date: string;
+  status: string;
+  amount: number;
+  description: string;
+}
+
 // API response types
 export interface ApiResponse<T> {
   data: T;

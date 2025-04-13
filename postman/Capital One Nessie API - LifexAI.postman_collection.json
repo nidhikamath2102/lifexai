@@ -1,0 +1,1093 @@
+{
+	"info": {
+		"_postman_id": "e940414d-c304-48b0-8ec6-4863ccb40771",
+		"name": "Capital One Nessie API - LifexAI",
+		"description": "A collection for interacting with the Capital One Nessie API for the LifexAI project. This collection focuses on creating and managing data for a single customer (Nidhi) with multiple accounts and various purchases.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16407556"
+	},
+	"item": [
+		{
+			"name": "1. Create Customer (Nidhi)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"first_name\": \"Nidhi\",\n  \"last_name\": \"Sharma\",\n  \"address\": {\n    \"street_number\": \"123\",\n    \"street_name\": \"University Blvd\",\n    \"city\": \"College Park\",\n    \"state\": \"MD\",\n    \"zip\": \"20742\"\n  }\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/customers?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"customers"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a customer profile for Nidhi Sharma. After running this request, save the returned customer ID in the 'customer_id' environment variable."
+			},
+			"response": []
+		},
+		{
+			"name": "2. Create Checking Account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"Checking\",\n  \"nickname\": \"Nidhi's Primary Checking\",\n  \"rewards\": 100,\n  \"balance\": 5000.75\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/customers/{{customer_id}}/accounts?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"customers",
+						"{{customer_id}}",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a checking account for Nidhi. After running this request, save the returned account ID in the 'checking_account_id' environment variable."
+			},
+			"response": []
+		},
+		{
+			"name": "3. Create Savings Account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"Savings\",\n  \"nickname\": \"Nidhi's Emergency Fund\",\n  \"rewards\": 50,\n  \"balance\": 15000.50\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/customers/{{customer_id}}/accounts?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"customers",
+						"{{customer_id}}",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a savings account for Nidhi. After running this request, save the returned account ID in the 'savings_account_id' environment variable."
+			},
+			"response": []
+		},
+		{
+			"name": "4. Create Credit Card Account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"Credit Card\",\n  \"nickname\": \"Nidhi's Rewards Card\",\n  \"rewards\": 500,\n  \"balance\": 2500.25\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/customers/{{customer_id}}/accounts?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"customers",
+						"{{customer_id}}",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a credit card account for Nidhi. After running this request, save the returned account ID in the 'credit_card_id' environment variable."
+			},
+			"response": []
+		},
+		{
+			"name": "5. Get All Merchants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api.nessieisreal.com/merchants?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"merchants"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Gets all merchants from the Nessie API. You'll need to select merchant IDs from this list to use in the purchase creation requests. Save a few merchant IDs in environment variables like 'merchant_id_1', 'merchant_id_2', etc."
+			},
+			"response": []
+		},
+		{
+			"name": "6. Create Grocery Purchase (Checking)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec4b\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-01\",\n  \"amount\": 85.75,\n  \"description\": \"Weekly grocery shopping\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a grocery purchase for Nidhi's checking account. Use a merchant ID from the 'Get All Merchants' request that corresponds to a grocery store."
+			},
+			"response": []
+		},
+		{
+			"name": "7. Create Coffee Purchase (Checking)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec55\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-02\",\n  \"amount\": 5.45,\n  \"description\": \"Morning coffee\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a coffee purchase for Nidhi's checking account. Use a merchant ID from the 'Get All Merchants' request that corresponds to a coffee shop."
+			},
+			"response": []
+		},
+		{
+			"name": "8. Create Gas Purchase (Checking)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec63\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-03\",\n  \"amount\": 45.00,\n  \"description\": \"Gas\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a gas purchase for Nidhi's checking account. Use a merchant ID from the 'Get All Merchants' request that corresponds to a gas station."
+			},
+			"response": []
+		},
+		{
+			"name": "9. Create Another Coffee Purchase (Checking)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec55\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-05\",\n  \"amount\": 5.45,\n  \"description\": \"Morning coffee\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates another coffee purchase for Nidhi's checking account. This is to demonstrate a recurring purchase pattern."
+			},
+			"response": []
+		},
+		{
+			"name": "10. Create Another Grocery Purchase (Checking)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec4b\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-08\",\n  \"amount\": 92.18,\n  \"description\": \"Weekly grocery shopping\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates another grocery purchase for Nidhi's checking account. This is to demonstrate a recurring purchase pattern."
+			},
+			"response": []
+		},
+		{
+			"name": "11. Create Online Shopping Purchase (Credit Card)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec49\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-01\",\n  \"amount\": 67.99,\n  \"description\": \"Household items\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{credit_card_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates an online shopping purchase for Nidhi's credit card. Use a merchant ID from the 'Get All Merchants' request that corresponds to an online retailer."
+			},
+			"response": []
+		},
+		{
+			"name": "12. Create Subscription Purchase (Credit Card)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec4f\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-02\",\n  \"amount\": 15.99,\n  \"description\": \"Monthly subscription\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{credit_card_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a subscription purchase for Nidhi's credit card. Use a merchant ID from the 'Get All Merchants' request that corresponds to a streaming service."
+			},
+			"response": []
+		},
+		{
+			"name": "13. Create Pharmacy Purchase (Credit Card)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec5f\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-03\",\n  \"amount\": 32.50,\n  \"description\": \"Prescription\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{credit_card_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a pharmacy purchase for Nidhi's credit card. Use a merchant ID from the 'Get All Merchants' request that corresponds to a pharmacy."
+			},
+			"response": []
+		},
+		{
+			"name": "14. Create Electronics Purchase (Credit Card)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec49\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-05\",\n  \"amount\": 129.99,\n  \"description\": \"Electronics\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{credit_card_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates an electronics purchase for Nidhi's credit card. Use a merchant ID from the 'Get All Merchants' request that corresponds to an electronics retailer."
+			},
+			"response": []
+		},
+		{
+			"name": "15. Create Previous Month Subscription (Credit Card)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec4f\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-03-02\",\n  \"amount\": 15.99,\n  \"description\": \"Monthly subscription\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{credit_card_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a subscription purchase from the previous month for Nidhi's credit card. This is to demonstrate a recurring monthly subscription."
+			},
+			"response": []
+		},
+		{
+			"name": "16. Create Large Purchase (Credit Card)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec49\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-10\",\n  \"amount\": 899.99,\n  \"description\": \"New smartphone\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{credit_card_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a large purchase for Nidhi's credit card. This is to demonstrate an anomaly in spending patterns."
+			},
+			"response": []
+		},
+		{
+			"name": "17. Create Party Supplies Purchase (Checking)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec4b\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-12\",\n  \"amount\": 312.45,\n  \"description\": \"Party supplies\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a party supplies purchase for Nidhi's checking account. This is to demonstrate an anomaly in spending patterns."
+			},
+			"response": []
+		},
+		{
+			"name": "18. Create Transfer to Savings",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"medium\": \"balance\",\n  \"payee_id\": \"{{savings_account_id}}\",\n  \"amount\": 500.00,\n  \"transaction_date\": \"2025-04-05\",\n  \"description\": \"Monthly savings transfer\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"transfers"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a transfer from Nidhi's checking account to her savings account."
+			},
+			"response": []
+		},
+		{
+			"name": "19. Create Previous Month Transfer to Savings",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"medium\": \"balance\",\n  \"payee_id\": \"{{savings_account_id}}\",\n  \"amount\": 500.00,\n  \"transaction_date\": \"2025-03-05\",\n  \"description\": \"Monthly savings transfer\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"transfers"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a transfer from the previous month from Nidhi's checking account to her savings account. This is to demonstrate a recurring monthly transfer."
+			},
+			"response": []
+		},
+		{
+			"name": "20. Create Credit Card Payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"medium\": \"balance\",\n  \"payee_id\": \"{{credit_card_id}}\",\n  \"amount\": 200.00,\n  \"transaction_date\": \"2025-04-10\",\n  \"description\": \"Credit card payment\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"transfers"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a transfer from Nidhi's checking account to her credit card account to pay off part of the balance."
+			},
+			"response": []
+		},
+		{
+			"name": "21. Create Deposit (Checking)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"medium\": \"balance\",\n  \"transaction_date\": \"2025-04-01\",\n  \"status\": \"completed\",\n  \"amount\": 2500.00,\n  \"description\": \"Payroll deposit\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/deposits?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"deposits"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a payroll deposit for Nidhi's checking account."
+			},
+			"response": []
+		},
+		{
+			"name": "22. Create Mid-Month Deposit (Checking)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"medium\": \"balance\",\n  \"transaction_date\": \"2025-04-15\",\n  \"status\": \"completed\",\n  \"amount\": 2500.00,\n  \"description\": \"Payroll deposit\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/deposits?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"deposits"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates a mid-month payroll deposit for Nidhi's checking account."
+			},
+			"response": []
+		},
+		{
+			"name": "23. Create Withdrawal (Checking)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"medium\": \"balance\",\n  \"transaction_date\": \"2025-04-05\",\n  \"status\": \"completed\",\n  \"amount\": 200.00,\n  \"description\": \"ATM withdrawal\"\n}"
+				},
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/withdrawals?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"withdrawals"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Creates an ATM withdrawal from Nidhi's checking account."
+			},
+			"response": []
+		},
+		{
+			"name": "24. Get Customer Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api.nessieisreal.com/customers/{{customer_id}}?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"customers",
+						"{{customer_id}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Gets the details of Nidhi's customer profile."
+			},
+			"response": []
+		},
+		{
+			"name": "25. Get Customer Accounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api.nessieisreal.com/customers/{{customer_id}}/accounts?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"customers",
+						"{{customer_id}}",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Gets all accounts associated with Nidhi's customer profile."
+			},
+			"response": []
+		},
+		{
+			"name": "26. Get Checking Account Purchases",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Gets all purchases associated with Nidhi's checking account."
+			},
+			"response": []
+		},
+		{
+			"name": "27. Get Credit Card Purchases",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{credit_card_id}}",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Gets all purchases associated with Nidhi's credit card account."
+			},
+			"response": []
+		},
+		{
+			"name": "28. Get Checking Account Transfers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"nessieisreal",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"{{checking_account_id}}",
+						"transfers"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Gets all transfers associated with Nidhi's checking account."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_key",
+			"value": "f666f7038dd52f8518eccc5660afb716",
+			"type": "string"
+		},
+		{
+			"key": "customer_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "checking_account_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "savings_account_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "credit_card_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "merchant_id_1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "merchant_id_2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "merchant_id_3",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "merchant_id_4",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "merchant_id_5",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "merchant_id_6",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

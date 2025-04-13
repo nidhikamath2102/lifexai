@@ -1,8 +1,24 @@
 import axios from 'axios';
 
+// Determine the base URL based on the environment
+const getBaseUrl = () => {
+  // Browser should use the current origin
+  if (typeof window !== 'undefined') return window.location.origin;
+  
+  // Vercel production deployment - hardcode the production URL
+  if (process.env.VERCEL_URL) return 'https://www.lifexai.tech';
+  
+  // Vercel preview deployment
+  if (process.env.VERCEL_ENV === 'preview') 
+    return `https://${process.env.VERCEL_URL}`;
+  
+  // Default to localhost for development
+  return 'http://localhost:3000';
+};
+
 // Create a configured axios instance with baseURL
 const api = axios.create({
-  baseURL: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
+  baseURL: getBaseUrl()
 });
 
 export interface HealthLog {

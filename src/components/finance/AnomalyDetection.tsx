@@ -95,9 +95,9 @@ const AnomalyDetection: React.FC<AnomalyDetectionProps> = ({ anomalies }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-xl font-semibold mb-4">Spending Anomalies</h2>
-      <p className="text-gray-600 mb-4">
-        We&apos;ve detected {anomalies.length} unusual transaction{anomalies.length !== 1 ? 's' : ''} that may require your attention.
-      </p>
+        <p className="text-gray-600 mb-4">
+          We&apos;ve detected {anomalies.length} unusual transaction{anomalies.length !== 1 ? 's' : ''} that may require your attention.
+        </p>
       
       <div className="space-y-4">
         {anomalies.map((anomaly) => {

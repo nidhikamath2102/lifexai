@@ -19,7 +19,8 @@ export const authenticateUser = async (username: string, password: string): Prom
     // Connect to MongoDB Atlas and authenticate
     const response = await axios.post('/api/auth/login', { username, password });
     return response.data;
-  } catch (error) {
+  } catch (err) {
+    console.error('Authentication error:', err);
     throw new Error('Authentication failed');
   }
 };
@@ -28,7 +29,8 @@ export const fetchCustomerById = async (customerId: string): Promise<Customer> =
   try {
     const response = await axios.get(`/api/customers/${customerId}`);
     return response.data;
-  } catch (error) {
+  } catch (err) {
+    console.error('Customer fetch error:', err);
     throw new Error('Failed to fetch customer data');
   }
 };

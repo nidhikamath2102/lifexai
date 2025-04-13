@@ -46,7 +46,8 @@ export async function POST(request: Request) {
     console.log('Login response data:', responseData);
 
     return NextResponse.json(responseData);
-  } catch (error) {
+  } catch (err) {
+    console.error('Login API error:', err);
     return NextResponse.json({ error: 'Authentication failed' }, { status: 500 });
   } finally {
     await client.close();

@@ -20,7 +20,8 @@ export default function LoginPage() {
     try {
       await login(username, password);
       router.push('/finance');
-    } catch (error) {
+    } catch (err) {
+      console.error('Login error:', err);
       setError('Invalid username or password');
     } finally {
       setIsLoading(false);
@@ -51,6 +52,7 @@ export default function LoginPage() {
                 onChange={(e) => setUsername(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required
+                autoComplete="username"
               />
             </div>
             <div className="mb-6">
@@ -64,6 +66,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required
+                autoComplete="current-password"
               />
             </div>
             <div className="flex items-center justify-between">

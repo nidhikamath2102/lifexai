@@ -6,6 +6,7 @@ import { ReactQueryProvider } from "../providers/ReactQueryProvider";
 import { AuthProvider } from "../contexts/AuthContext";
 import { AuthModalProvider } from "../components/auth/AuthModalController";
 import AuthButton from "../components/auth/AuthButton";
+import ChatAssistant from "../components/ui/ChatAssistant";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -72,6 +73,7 @@ export default function RootLayout({
                 </header>
                 <main className="flex-grow">
                   {children}
+                  <ChatAssistant />
                 </main>
                 <footer className="bg-gray-100 dark:bg-gray-800 py-6">
                   <div className="container mx-auto px-4 text-center text-gray-600 dark:text-gray-300">

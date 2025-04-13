@@ -89,7 +89,7 @@ export default function Home() {
               <h2 className="text-xl font-bold text-green-700 dark:text-green-300">Coming Soon</h2>
             </div>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              We're working on adding health monitoring and digital safety features. Stay tuned for updates on these exciting new capabilities!
+              We&apos;re working on adding health monitoring and digital safety features. Stay tuned for updates on these exciting new capabilities!
             </p>
             <button 
               disabled

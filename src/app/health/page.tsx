@@ -47,7 +47,7 @@ export default function HealthPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-300">Loading LifeVitals...</h2>
+          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-300">Loading LifexAI Health...</h2>
         </div>
       </div>
     );
@@ -70,7 +70,7 @@ export default function HealthPage() {
                 </svg>
               </motion.div>
               <div>
-                <h1 className="text-2xl font-bold">LifeVitals</h1>
+                <h1 className="text-2xl font-bold">LifexAI Health</h1>
                 <div className={`text-sm ${isDarkMode ? 'text-green-300' : 'text-green-600'} font-medium`}>
                   Your personal health assistant
                 </div>

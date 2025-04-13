@@ -147,7 +147,7 @@ export default function HealthTrendsPage() {
                 </svg>
               </motion.div>
               <div>
-                <h1 className="text-2xl font-bold">LifeVitals</h1>
+                <h1 className="text-2xl font-bold">LifexAI Health</h1>
                 <div className={`text-sm ${isDarkMode ? 'text-green-300' : 'text-green-600'} font-medium`}>
                   Health Trends Dashboard
                 </div>

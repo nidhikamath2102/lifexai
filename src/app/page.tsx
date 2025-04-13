@@ -17,7 +17,7 @@ export default function Home() {
           <div className="p-8">
             <h2 className="text-2xl font-bold mb-4">About LifexAI</h2>
             <p className="text-gray-600 mb-6">
-              LifexAI is your personal "holistic detective," analyzing clues from your life – health habits, financial transactions, and digital footprints – to give you actionable insights. It features a beautiful, playful UI and leverages cutting-edge AI/ML to provide you with valuable information about your daily life.
+              LifexAI is your personal &quot;holistic detective,&quot; analyzing clues from your life – health habits, financial transactions, and digital footprints – to give you actionable insights. It features a beautiful, playful UI and leverages cutting-edge AI/ML to provide you with valuable information about your daily life.
             </p>
             
             <h3 className="text-xl font-semibold mb-2">Features</h3>
@@ -52,7 +52,7 @@ export default function Home() {
           <div className="bg-green-50 rounded-lg p-6 shadow-md">
             <h2 className="text-xl font-bold mb-4 text-green-700">Coming Soon</h2>
             <p className="text-gray-600 mb-4">
-              We're working on adding health monitoring and digital safety features. Stay tuned for updates!
+              We&apos;re working on adding health monitoring and digital safety features. Stay tuned for updates!
             </p>
             <button 
               disabled

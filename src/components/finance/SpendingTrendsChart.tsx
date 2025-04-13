@@ -10,6 +10,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  TooltipItem,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { SpendingTrend } from '../../utils/financeUtils';
@@ -84,8 +85,8 @@ const SpendingTrendsChart: React.FC<SpendingTrendsChartProps> = ({
       },
       tooltip: {
         callbacks: {
-          label: (context: { raw: number }) => {
-            return formatCurrency(context.raw);
+          label: (tooltipItem: TooltipItem<'line'>) => {
+            return formatCurrency(tooltipItem.raw as number);
           },
         },
       },
@@ -94,8 +95,8 @@ const SpendingTrendsChart: React.FC<SpendingTrendsChartProps> = ({
       y: {
         beginAtZero: true,
         ticks: {
-          callback: (value: number) => {
-            return formatCurrency(value);
+          callback: (tickValue: string | number) => {
+            return formatCurrency(Number(tickValue));
           },
         },
       },

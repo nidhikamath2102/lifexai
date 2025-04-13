@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, TooltipItem } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { SpendingByCategory } from '../../utils/financeUtils';
 
@@ -70,10 +70,10 @@ const SpendingCategoryChart: React.FC<SpendingCategoryChartProps> = ({
       },
       tooltip: {
         callbacks: {
-          label: (context: any) => {
-            const label = context.label || '';
-            const value = context.raw || 0;
-            const percentage = context.parsed || 0;
+          label: (tooltipItem: TooltipItem<'pie'>) => {
+            const label = tooltipItem.label || '';
+            const value = tooltipItem.raw as number || 0;
+            const percentage = tooltipItem.parsed as number || 0;
             return `${label}: ${formatCurrency(value)} (${percentage.toFixed(1)}%)`;
           },
         },

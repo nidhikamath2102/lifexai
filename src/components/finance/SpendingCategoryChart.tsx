@@ -72,7 +72,6 @@ const SpendingCategoryChart: React.FC<SpendingCategoryChartProps> = ({
         callbacks: {
           label: (tooltipItem: TooltipItem<'pie'>) => {
             const label = tooltipItem.label || '';
-            // Fix the 'any' type by explicitly typing the raw value
             const value = Number(tooltipItem.raw) || 0;
             const percentage = tooltipItem.parsed || 0;
             return `${label}: ${formatCurrency(value)} (${percentage.toFixed(1)}%)`;

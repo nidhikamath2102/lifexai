@@ -35,66 +35,406 @@ export interface SpendingTrend {
   amount: number;
 }
 
-// Function to categorize a purchase based on merchant category
+// Function to categorize a purchase based on merchant category and name
 export const categorizePurchase = (
   purchase: Purchase,
   merchant?: Merchant
 ): CategorizedPurchase => {
   let category = TransactionCategory.OTHER;
   
-  // If merchant is provided, use its category to determine the transaction category
-  if (merchant && merchant.category && typeof merchant.category === 'string') {
-    switch (merchant.category.toLowerCase()) {
-      case 'food':
-      case 'restaurant':
-      case 'grocery':
+  // If merchant is provided, use its category and name to determine the transaction category
+  if (merchant) {
+    const merchantCategory = typeof merchant.category === 'string' ? merchant.category.toLowerCase() : '';
+    const merchantName = typeof merchant.name === 'string' ? merchant.name.toLowerCase() : '';
+    
+    // First try to categorize based on merchant category
+    if (merchantCategory) {
+      // Food & Dining
+      if (
+        merchantCategory.includes('food') ||
+        merchantCategory.includes('restaurant') ||
+        merchantCategory.includes('dining') ||
+        merchantCategory.includes('cafe') ||
+        merchantCategory.includes('coffee') ||
+        merchantCategory.includes('bakery') ||
+        merchantCategory.includes('grocery') ||
+        merchantCategory.includes('supermarket') ||
+        merchantCategory.includes('meal') ||
+        merchantCategory.includes('fast food') ||
+        merchantCategory.includes('pizzeria') ||
+        merchantCategory.includes('deli')
+      ) {
         category = TransactionCategory.FOOD;
-        break;
-      case 'shopping':
-      case 'retail':
-      case 'clothing':
+      }
+      // Shopping
+      else if (
+        merchantCategory.includes('shopping') ||
+        merchantCategory.includes('retail') ||
+        merchantCategory.includes('clothing') ||
+        merchantCategory.includes('apparel') ||
+        merchantCategory.includes('department store') ||
+        merchantCategory.includes('electronics') ||
+        merchantCategory.includes('jewelry') ||
+        merchantCategory.includes('bookstore') ||
+        merchantCategory.includes('market') ||
+        merchantCategory.includes('store') ||
+        merchantCategory.includes('mall') ||
+        merchantCategory.includes('outlet')
+      ) {
         category = TransactionCategory.SHOPPING;
-        break;
-      case 'entertainment':
-      case 'movie':
-      case 'game':
+      }
+      // Entertainment
+      else if (
+        merchantCategory.includes('entertainment') ||
+        merchantCategory.includes('movie') ||
+        merchantCategory.includes('cinema') ||
+        merchantCategory.includes('theater') ||
+        merchantCategory.includes('game') ||
+        merchantCategory.includes('amusement') ||
+        merchantCategory.includes('park') ||
+        merchantCategory.includes('concert') ||
+        merchantCategory.includes('music') ||
+        merchantCategory.includes('event') ||
+        merchantCategory.includes('sport') ||
+        merchantCategory.includes('recreation')
+      ) {
         category = TransactionCategory.ENTERTAINMENT;
-        break;
-      case 'travel':
-      case 'hotel':
-      case 'airline':
+      }
+      // Travel
+      else if (
+        merchantCategory.includes('travel') ||
+        merchantCategory.includes('hotel') ||
+        merchantCategory.includes('motel') ||
+        merchantCategory.includes('lodging') ||
+        merchantCategory.includes('airline') ||
+        merchantCategory.includes('flight') ||
+        merchantCategory.includes('airport') ||
+        merchantCategory.includes('cruise') ||
+        merchantCategory.includes('vacation') ||
+        merchantCategory.includes('resort') ||
+        merchantCategory.includes('booking') ||
+        merchantCategory.includes('tourism')
+      ) {
         category = TransactionCategory.TRAVEL;
-        break;
-      case 'transportation':
-      case 'gas':
-      case 'automotive':
+      }
+      // Transportation
+      else if (
+        merchantCategory.includes('transportation') ||
+        merchantCategory.includes('gas') ||
+        merchantCategory.includes('fuel') ||
+        merchantCategory.includes('automotive') ||
+        merchantCategory.includes('auto') ||
+        merchantCategory.includes('car') ||
+        merchantCategory.includes('vehicle') ||
+        merchantCategory.includes('taxi') ||
+        merchantCategory.includes('uber') ||
+        merchantCategory.includes('lyft') ||
+        merchantCategory.includes('transit') ||
+        merchantCategory.includes('train') ||
+        merchantCategory.includes('bus') ||
+        merchantCategory.includes('subway') ||
+        merchantCategory.includes('parking')
+      ) {
         category = TransactionCategory.TRANSPORTATION;
-        break;
-      case 'utilities':
-      case 'telecom':
+      }
+      // Utilities
+      else if (
+        merchantCategory.includes('utilities') ||
+        merchantCategory.includes('utility') ||
+        merchantCategory.includes('telecom') ||
+        merchantCategory.includes('phone') ||
+        merchantCategory.includes('mobile') ||
+        merchantCategory.includes('internet') ||
+        merchantCategory.includes('cable') ||
+        merchantCategory.includes('electricity') ||
+        merchantCategory.includes('water') ||
+        merchantCategory.includes('gas utility') ||
+        merchantCategory.includes('energy') ||
+        merchantCategory.includes('bill payment')
+      ) {
         category = TransactionCategory.UTILITIES;
-        break;
-      case 'health':
-      case 'medical':
-      case 'pharmacy':
+      }
+      // Health & Medical
+      else if (
+        merchantCategory.includes('health') ||
+        merchantCategory.includes('medical') ||
+        merchantCategory.includes('healthcare') ||
+        merchantCategory.includes('pharmacy') ||
+        merchantCategory.includes('drug') ||
+        merchantCategory.includes('doctor') ||
+        merchantCategory.includes('hospital') ||
+        merchantCategory.includes('clinic') ||
+        merchantCategory.includes('dental') ||
+        merchantCategory.includes('vision') ||
+        merchantCategory.includes('fitness') ||
+        merchantCategory.includes('gym')
+      ) {
         category = TransactionCategory.HEALTH;
-        break;
-      case 'education':
-      case 'school':
-      case 'university':
+      }
+      // Education
+      else if (
+        merchantCategory.includes('education') ||
+        merchantCategory.includes('school') ||
+        merchantCategory.includes('university') ||
+        merchantCategory.includes('college') ||
+        merchantCategory.includes('academy') ||
+        merchantCategory.includes('tuition') ||
+        merchantCategory.includes('course') ||
+        merchantCategory.includes('training') ||
+        merchantCategory.includes('learning')
+      ) {
         category = TransactionCategory.EDUCATION;
-        break;
-      case 'personal':
-      case 'beauty':
+      }
+      // Personal Care
+      else if (
+        merchantCategory.includes('personal') ||
+        merchantCategory.includes('beauty') ||
+        merchantCategory.includes('salon') ||
+        merchantCategory.includes('spa') ||
+        merchantCategory.includes('barber') ||
+        merchantCategory.includes('cosmetic') ||
+        merchantCategory.includes('hair') ||
+        merchantCategory.includes('nail')
+      ) {
         category = TransactionCategory.PERSONAL;
-        break;
-      case 'home':
-      case 'furniture':
-      case 'hardware':
+      }
+      // Home
+      else if (
+        merchantCategory.includes('home') ||
+        merchantCategory.includes('furniture') ||
+        merchantCategory.includes('hardware') ||
+        merchantCategory.includes('appliance') ||
+        merchantCategory.includes('garden') ||
+        merchantCategory.includes('improvement') ||
+        merchantCategory.includes('decor') ||
+        merchantCategory.includes('construction') ||
+        merchantCategory.includes('repair') ||
+        merchantCategory.includes('maintenance')
+      ) {
         category = TransactionCategory.HOME;
-        break;
-      default:
-        category = TransactionCategory.OTHER;
+      }
+    }
+    
+    // If category is still OTHER, try to categorize based on merchant name
+    if (category === TransactionCategory.OTHER && merchantName) {
+      // Food & Dining
+      if (
+        merchantName.includes('restaurant') ||
+        merchantName.includes('cafe') ||
+        merchantName.includes('coffee') ||
+        merchantName.includes('starbucks') ||
+        merchantName.includes('mcdonald') ||
+        merchantName.includes('burger') ||
+        merchantName.includes('pizza') ||
+        merchantName.includes('taco') ||
+        merchantName.includes('subway') ||
+        merchantName.includes('chipotle') ||
+        merchantName.includes('wendy') ||
+        merchantName.includes('kfc') ||
+        merchantName.includes('donut') ||
+        merchantName.includes('bakery') ||
+        merchantName.includes('grocery') ||
+        merchantName.includes('market') ||
+        merchantName.includes('food') ||
+        merchantName.includes('deli') ||
+        merchantName.includes('walmart') ||
+        merchantName.includes('target') ||
+        merchantName.includes('costco') ||
+        merchantName.includes('safeway') ||
+        merchantName.includes('kroger') ||
+        merchantName.includes('trader') ||
+        merchantName.includes('whole foods')
+      ) {
+        category = TransactionCategory.FOOD;
+      }
+      // Shopping
+      else if (
+        merchantName.includes('amazon') ||
+        merchantName.includes('walmart') ||
+        merchantName.includes('target') ||
+        merchantName.includes('costco') ||
+        merchantName.includes('best buy') ||
+        merchantName.includes('macy') ||
+        merchantName.includes('nordstrom') ||
+        merchantName.includes('nike') ||
+        merchantName.includes('adidas') ||
+        merchantName.includes('apple') ||
+        merchantName.includes('microsoft') ||
+        merchantName.includes('store') ||
+        merchantName.includes('shop') ||
+        merchantName.includes('mall') ||
+        merchantName.includes('outlet')
+      ) {
+        category = TransactionCategory.SHOPPING;
+      }
+      // Entertainment
+      else if (
+        merchantName.includes('netflix') ||
+        merchantName.includes('hulu') ||
+        merchantName.includes('disney') ||
+        merchantName.includes('spotify') ||
+        merchantName.includes('apple music') ||
+        merchantName.includes('cinema') ||
+        merchantName.includes('theater') ||
+        merchantName.includes('movie') ||
+        merchantName.includes('ticket') ||
+        merchantName.includes('concert') ||
+        merchantName.includes('event') ||
+        merchantName.includes('game') ||
+        merchantName.includes('steam') ||
+        merchantName.includes('playstation') ||
+        merchantName.includes('xbox')
+      ) {
+        category = TransactionCategory.ENTERTAINMENT;
+      }
+      // Travel
+      else if (
+        merchantName.includes('hotel') ||
+        merchantName.includes('airbnb') ||
+        merchantName.includes('booking') ||
+        merchantName.includes('expedia') ||
+        merchantName.includes('airline') ||
+        merchantName.includes('delta') ||
+        merchantName.includes('united') ||
+        merchantName.includes('american airlines') ||
+        merchantName.includes('southwest') ||
+        merchantName.includes('flight') ||
+        merchantName.includes('travel') ||
+        merchantName.includes('vacation') ||
+        merchantName.includes('cruise') ||
+        merchantName.includes('resort')
+      ) {
+        category = TransactionCategory.TRAVEL;
+      }
+      // Transportation
+      else if (
+        merchantName.includes('uber') ||
+        merchantName.includes('lyft') ||
+        merchantName.includes('taxi') ||
+        merchantName.includes('gas') ||
+        merchantName.includes('shell') ||
+        merchantName.includes('exxon') ||
+        merchantName.includes('chevron') ||
+        merchantName.includes('bp') ||
+        merchantName.includes('auto') ||
+        merchantName.includes('car') ||
+        merchantName.includes('parking') ||
+        merchantName.includes('transit') ||
+        merchantName.includes('metro') ||
+        merchantName.includes('train') ||
+        merchantName.includes('amtrak')
+      ) {
+        category = TransactionCategory.TRANSPORTATION;
+      }
+      // Utilities
+      else if (
+        merchantName.includes('at&t') ||
+        merchantName.includes('verizon') ||
+        merchantName.includes('t-mobile') ||
+        merchantName.includes('sprint') ||
+        merchantName.includes('comcast') ||
+        merchantName.includes('xfinity') ||
+        merchantName.includes('spectrum') ||
+        merchantName.includes('utility') ||
+        merchantName.includes('electric') ||
+        merchantName.includes('water') ||
+        merchantName.includes('gas') ||
+        merchantName.includes('power') ||
+        merchantName.includes('energy') ||
+        merchantName.includes('internet') ||
+        merchantName.includes('phone') ||
+        merchantName.includes('mobile')
+      ) {
+        category = TransactionCategory.UTILITIES;
+      }
+      // Health & Medical
+      else if (
+        merchantName.includes('cvs') ||
+        merchantName.includes('walgreens') ||
+        merchantName.includes('rite aid') ||
+        merchantName.includes('pharmacy') ||
+        merchantName.includes('doctor') ||
+        merchantName.includes('hospital') ||
+        merchantName.includes('clinic') ||
+        merchantName.includes('medical') ||
+        merchantName.includes('health') ||
+        merchantName.includes('dental') ||
+        merchantName.includes('vision') ||
+        merchantName.includes('fitness') ||
+        merchantName.includes('gym') ||
+        merchantName.includes('planet fitness') ||
+        merchantName.includes('24 hour fitness')
+      ) {
+        category = TransactionCategory.HEALTH;
+      }
+    }
+    
+    // If we still couldn't categorize based on merchant name or category,
+    // try to categorize based on purchase description
+    if (category === TransactionCategory.OTHER && purchase.description) {
+      const description = purchase.description.toLowerCase();
+      
+      // Check for keywords in the description
+      if (
+        description.includes('food') ||
+        description.includes('grocery') ||
+        description.includes('restaurant') ||
+        description.includes('meal') ||
+        description.includes('lunch') ||
+        description.includes('dinner') ||
+        description.includes('breakfast')
+      ) {
+        category = TransactionCategory.FOOD;
+      }
+      else if (
+        description.includes('shopping') ||
+        description.includes('purchase') ||
+        description.includes('buy') ||
+        description.includes('store')
+      ) {
+        category = TransactionCategory.SHOPPING;
+      }
+      else if (
+        description.includes('movie') ||
+        description.includes('entertainment') ||
+        description.includes('game') ||
+        description.includes('ticket')
+      ) {
+        category = TransactionCategory.ENTERTAINMENT;
+      }
+      else if (
+        description.includes('travel') ||
+        description.includes('hotel') ||
+        description.includes('flight') ||
+        description.includes('trip')
+      ) {
+        category = TransactionCategory.TRAVEL;
+      }
+      else if (
+        description.includes('gas') ||
+        description.includes('uber') ||
+        description.includes('lyft') ||
+        description.includes('taxi') ||
+        description.includes('transport')
+      ) {
+        category = TransactionCategory.TRANSPORTATION;
+      }
+      else if (
+        description.includes('bill') ||
+        description.includes('utility') ||
+        description.includes('phone') ||
+        description.includes('internet')
+      ) {
+        category = TransactionCategory.UTILITIES;
+      }
+      else if (
+        description.includes('doctor') ||
+        description.includes('medical') ||
+        description.includes('health') ||
+        description.includes('pharmacy')
+      ) {
+        category = TransactionCategory.HEALTH;
+      }
     }
   }
 

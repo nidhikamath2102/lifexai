@@ -5,6 +5,11 @@ interface LoginResponse {
   customer_id: string;
 }
 
+interface SignupResponse {
+  username: string;
+  customer_id: string;
+}
+
 interface Customer {
   _id: string;
   name: string;
@@ -22,6 +27,17 @@ export const authenticateUser = async (username: string, password: string): Prom
   } catch (err) {
     console.error('Authentication error:', err);
     throw new Error('Authentication failed');
+  }
+};
+
+export const registerUser = async (username: string, email: string, password: string): Promise<SignupResponse> => {
+  try {
+    // Connect to MongoDB Atlas and register new user
+    const response = await axios.post('/api/auth/signup', { username, email, password });
+    return response.data;
+  } catch (err) {
+    console.error('Registration error:', err);
+    throw new Error('Registration failed');
   }
 };
 

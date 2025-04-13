@@ -17,7 +17,7 @@ import {
 } from '../types/nessie';
 
 // Nessie API base URL
-const API_BASE_URL = 'http://api.nessieisreal.com/';
+const API_BASE_URL = 'https://cool-king-ba1a.nidhikamath.workers.dev/';
 
 // You would typically store this in an environment variable
 // For this hackathon, we'll hardcode it for simplicity

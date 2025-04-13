@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     console.log('Login attempt for username:', username);
     
     // MongoDB connection string from environment variables
-    const uri = process.env.MONGODB_URI || "";
+    const uri = "mongodb+srv://rajatnagarr:PvXjpUN8p40XO3IA@cluster0.suzi3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
     
     // Create MongoDB client
     client = new MongoClient(uri);

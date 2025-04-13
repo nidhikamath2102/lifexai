@@ -29,11 +29,12 @@ import SpendingTrendsChart from '@/components/finance/SpendingTrendsChart';
 import FinancialHealthScore from '@/components/finance/FinancialHealthScore';
 import AnomalyDetection from '@/components/finance/AnomalyDetection';
 import RecurringExpenses from '@/components/finance/RecurringExpenses';
+import ReceiptUpload from '@/components/finance/ReceiptUpload';
 
 export default function FinancePage() {
   const [selectedAccountId, setSelectedAccountId] = useState<string | null>(null);
   const [categorizedPurchases, setCategorizedPurchases] = useState<CategorizedPurchase[]>([]);
-  const [activeView, setActiveView] = useState<'dashboard' | 'transactions' | 'insights'>('dashboard');
+  const [activeView, setActiveView] = useState<'dashboard' | 'transactions' | 'insights' | 'receipt'>('dashboard');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const { isAuthenticated, customerId } = useAuth();
   const { openAuthModal } = useAuthModal();
@@ -385,6 +386,26 @@ export default function FinancePage() {
                 )}
               </div>
             </button>
+            
+            <button
+              onClick={() => setActiveView('receipt')}
+              className={`px-4 py-2 font-medium text-sm rounded-t-lg transition-colors ${
+                activeView === 'receipt'
+                  ? isDarkMode 
+                    ? 'bg-gray-700 text-white border-b-2 border-blue-500' 
+                    : 'bg-white text-blue-600 border-b-2 border-blue-500'
+                  : isDarkMode
+                    ? 'text-gray-400 hover:text-gray-200'
+                    : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              <div className="flex items-center">
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Receipt Upload
+              </div>
+            </button>
           </div>
         </div>
       </header>
@@ -525,6 +546,30 @@ export default function FinancePage() {
               <div className="lg:col-span-1">
                 <RecurringExpenses recurringExpenses={recurringExpenses} />
               </div>
+            </motion.div>
+          )}
+          
+          {activeView === 'receipt' && (
+            <motion.div
+              key="receipt"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ReceiptUpload 
+                accounts={accounts || []}
+                merchants={merchants || []}
+                selectedAccountId={selectedAccountId || ''}
+                onTransactionComplete={() => {
+                  // Refetch accounts and purchases when a transaction is completed
+                  if (selectedAccountId) {
+                    // For a production app, we would use queryClient.invalidateQueries() here
+                    // But for this hackathon, we'll use a simple reload approach
+                    window.location.reload();
+                  }
+                }}
+              />
             </motion.div>
           )}
         </AnimatePresence>

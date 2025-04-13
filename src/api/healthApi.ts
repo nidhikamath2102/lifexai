@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+// Create a configured axios instance with baseURL
+const api = axios.create({
+  baseURL: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
+});
+
 export interface HealthLog {
   _id?: string;
   user_id: string;
@@ -24,7 +29,7 @@ export interface UserInsight {
 // Save a health log entry
 export const saveHealthLog = async (healthLog: Omit<HealthLog, '_id'>): Promise<HealthLog> => {
   try {
-    const response = await axios.post('/api/health/logs', healthLog);
+    const response = await api.post('/api/health/logs', healthLog);
     return response.data;
   } catch (err) {
     console.error('Health log save error:', err);
@@ -35,7 +40,7 @@ export const saveHealthLog = async (healthLog: Omit<HealthLog, '_id'>): Promise<
 // Get health logs for a user
 export const getUserHealthLogs = async (userId: string): Promise<HealthLog[]> => {
   try {
-    const response = await axios.get(`/api/health/logs?userId=${userId}`);
+    const response = await api.get(`/api/health/logs?userId=${userId}`);
     return response.data;
   } catch (err) {
     console.error('Health logs fetch error:', err);
@@ -46,7 +51,7 @@ export const getUserHealthLogs = async (userId: string): Promise<HealthLog[]> =>
 // Get the latest health log for a user
 export const getLatestHealthLog = async (userId: string): Promise<HealthLog | null> => {
   try {
-    const response = await axios.get(`/api/health/logs/latest?userId=${userId}`);
+    const response = await api.get(`/api/health/logs/latest?userId=${userId}`);
     return response.data;
   } catch (err) {
     console.error('Latest health log fetch error:', err);
@@ -57,7 +62,7 @@ export const getLatestHealthLog = async (userId: string): Promise<HealthLog | nu
 // Get health insights for a user
 export const getUserHealthInsights = async (userId: string): Promise<UserInsight[]> => {
   try {
-    const response = await axios.get(`/api/health/insights?userId=${userId}`);
+    const response = await api.get(`/api/health/insights?userId=${userId}`);
     return response.data;
   } catch (err) {
     console.error('Health insights fetch error:', err);
@@ -68,7 +73,7 @@ export const getUserHealthInsights = async (userId: string): Promise<UserInsight
 // Get the latest health insight for a user
 export const getLatestHealthInsight = async (userId: string): Promise<UserInsight | null> => {
   try {
-    const response = await axios.get(`/api/health/insights/latest?userId=${userId}`);
+    const response = await api.get(`/api/health/insights/latest?userId=${userId}`);
     return response.data;
   } catch (err) {
     console.error('Latest health insight fetch error:', err);
@@ -92,7 +97,7 @@ export interface RegionalHealthTrend {
 export const getRegionalHealthTrends = async (): Promise<RegionalHealthTrend[]> => {
   try {
     console.log('Making API request to /api/health/trends/regional');
-    const response = await axios.get('/api/health/trends/regional', {
+    const response = await api.get('/api/health/trends/regional', {
       timeout: 10000, // 10 second timeout
       headers: {
         'Cache-Control': 'no-cache',
@@ -120,7 +125,7 @@ export const getRegionalHealthTrends = async (): Promise<RegionalHealthTrend[]> 
 // Get health myths and facts
 export const getHealthMythsAndFacts = async (): Promise<{ myth: string; fact: string }[]> => {
   try {
-    const response = await axios.get('/api/health/myths');
+    const response = await api.get('/api/health/myths');
     return response.data;
   } catch (err) {
     console.error('Health myths fetch error:', err);

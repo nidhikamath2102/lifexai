@@ -74,7 +74,7 @@ const AnomalyDetection: React.FC<AnomalyDetectionProps> = ({ anomalies }) => {
   
   // Get anomaly explanation
   const getAnomalyExplanation = (anomaly: CategorizedPurchase) => {
-    return `This ${anomaly.category} transaction is unusually ${anomaly.amount > 0 ? 'high' : 'low'} compared to your typical spending in this category.`;
+    return `This ${anomaly.category} transaction is unusually ${anomaly.amount > 0 ? "high" : "low"} compared to your typical spending in this category.`;
   };
   
   // If no anomalies, show a message

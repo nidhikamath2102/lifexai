@@ -79,10 +79,28 @@ export const getLatestHealthInsight = async (userId: string): Promise<UserInsigh
 // Get regional health trends (for disease prediction)
 export const getRegionalHealthTrends = async (): Promise<any> => {
   try {
-    const response = await axios.get('/api/health/trends/regional');
+    console.log('Making API request to /api/health/trends/regional');
+    const response = await axios.get('/api/health/trends/regional', {
+      timeout: 10000, // 10 second timeout
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    });
+    console.log('API response received:', response.status, response.statusText);
+    console.log('Response data:', response.data);
     return response.data;
   } catch (err) {
     console.error('Regional health trends fetch error:', err);
+    if (axios.isAxiosError(err)) {
+      console.error('Axios error details:', {
+        status: err.response?.status,
+        statusText: err.response?.statusText,
+        data: err.response?.data,
+        message: err.message
+      });
+      throw new Error(`Failed to fetch regional health trends: ${err.message}`);
+    }
     throw new Error('Failed to fetch regional health trends');
   }
 };

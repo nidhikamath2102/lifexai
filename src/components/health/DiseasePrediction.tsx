@@ -1,9 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { getRegionalHealthTrends } from '@/api/healthApi';
 
 // Define types for regional health trends data
 interface Symptom {
@@ -19,18 +17,55 @@ interface RegionalTrend {
   prediction: string;
 }
 
+// Hardcoded mock data for health trends
+const mockRegionalTrends: RegionalTrend[] = [
+  {
+    region: "Northeast",
+    symptoms: [
+      { name: "Cough", count: 32, trend: "increasing" },
+      { name: "Fever", count: 28, trend: "increasing" },
+      { name: "Sore throat", count: 24, trend: "stable" }
+    ],
+    alert_level: "moderate",
+    prediction: "Possible flu outbreak in the next 7-10 days"
+  },
+  {
+    region: "Midwest",
+    symptoms: [
+      { name: "Allergies", count: 45, trend: "increasing" },
+      { name: "Congestion", count: 38, trend: "increasing" },
+      { name: "Headache", count: 29, trend: "stable" }
+    ],
+    alert_level: "low",
+    prediction: "Seasonal allergies peaking in the region"
+  },
+  {
+    region: "South",
+    symptoms: [
+      { name: "Fatigue", count: 27, trend: "stable" },
+      { name: "Muscle aches", count: 22, trend: "decreasing" },
+      { name: "Headache", count: 19, trend: "stable" }
+    ],
+    alert_level: "low",
+    prediction: "No significant disease outbreaks predicted"
+  },
+  {
+    region: "West",
+    symptoms: [
+      { name: "Cough", count: 18, trend: "increasing" },
+      { name: "Fever", count: 15, trend: "increasing" },
+      { name: "Shortness of breath", count: 12, trend: "increasing" }
+    ],
+    alert_level: "high",
+    prediction: "Respiratory infection cluster forming, monitor closely"
+  }
+];
+
 export default function DiseasePrediction() {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   
-  // Fetch regional health trends
-  const { 
-    data: regionalTrends,
-    isLoading,
-    error
-  } = useQuery({
-    queryKey: ['regionalHealthTrends'],
-    queryFn: getRegionalHealthTrends
-  });
+  // Log component rendering for debugging
+  console.log('DiseasePrediction component rendering');
   
   // Get alert level color
   const getAlertLevelColor = (level: string) => {
@@ -72,49 +107,8 @@ export default function DiseasePrediction() {
     }
   };
   
-  // Loading state
-  if (isLoading) {
-    return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-          <div className="h-48 bg-gray-200 dark:bg-gray-700 rounded"></div>
-          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-        </div>
-      </div>
-    );
-  }
-  
-  // Error state
-  if (error) {
-    return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden p-6">
-        <div className="text-center text-red-500">
-          <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <h3 className="text-lg font-medium">Error Loading Health Trends</h3>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            {(error as Error)?.message || 'Failed to load regional health trends'}
-          </p>
-        </div>
-      </div>
-    );
-  }
-  
-  // No data state
-  if (!regionalTrends || regionalTrends.length === 0) {
-    return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden p-6">
-        <div className="text-center">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No Health Trends Available</h3>
-          <p className="text-gray-500 dark:text-gray-400">
-            Check back later for regional health trends.
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // Use the mock data directly
+  const regionalTrends = mockRegionalTrends;
   
   // Get selected region data or default to first region
   const selectedRegionData = selectedRegion 

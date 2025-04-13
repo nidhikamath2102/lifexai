@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { useAuth } from '@/contexts/AuthContext';
-import { useAuthModal } from '@/components/auth/AuthModalController';
 
 // Health components
 import DailyCheckIn from '@/components/health/DailyCheckIn';
@@ -14,8 +12,6 @@ import MythBuster from '@/components/health/MythBuster';
 import DiseasePrediction from '@/components/health/DiseasePrediction';
 
 export default function HealthPage() {
-  const { isAuthenticated } = useAuth();
-  const { openAuthModal } = useAuthModal();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -36,16 +32,6 @@ export default function HealthPage() {
       setIsDarkMode(document.documentElement.classList.contains('dark'));
     }
   }, []);
-  
-  // Open auth modal if not authenticated
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      openAuthModal(() => {
-        // After successful authentication, refresh the page
-        window.location.reload();
-      });
-    }
-  }, [isLoading, isAuthenticated, openAuthModal]);
   
   // Toggle dark mode
   const toggleDarkMode = () => {

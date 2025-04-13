@@ -9,9 +9,13 @@ const collectionName = 'health_logs';
 
 // GET /api/health/trends/regional
 export async function GET(request: NextRequest) {
+  let mongoClient = null;
+  
   try {
-    await client.connect();
-    const db = client.db(dbName);
+    // Create a new client for each request to avoid connection issues
+    mongoClient = new MongoClient(uri);
+    await mongoClient.connect();
+    const db = mongoClient.db(dbName);
     const collection = db.collection(collectionName);
     
     // Aggregate symptoms by region (simplified for hackathon)
@@ -20,7 +24,9 @@ export async function GET(request: NextRequest) {
       {
         $match: {
           symptoms: { $exists: true, $ne: "" },
-          date: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString() } // Last 30 days
+          date: { 
+            $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] 
+          } // Last 30 days
         }
       },
       {
@@ -37,8 +43,8 @@ export async function GET(request: NextRequest) {
       }
     ]).toArray();
     
-    // If we don't have enough real data, add some mock data for the hackathon demo
-    const regionalTrends = symptomAggregation.length > 0 ? symptomAggregation : [
+    // For the hackathon demo, always use mock data to ensure consistent UI
+    const regionalTrends = [
       {
         region: "Northeast",
         symptoms: [
@@ -86,6 +92,8 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching regional health trends:', error);
     return NextResponse.json({ error: 'Failed to fetch regional health trends' }, { status: 500 });
   } finally {
-    await client.close();
+    if (mongoClient) {
+      await mongoClient.close();
+    }
   }
 }

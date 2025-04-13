@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { MongoClient } from 'mongodb';
 
 // MongoDB connection from environment variables
-const uri = process.env.MONGODB_URI || "";
+const uri = "mongodb+srv://rajatnagarr:PvXjpUN8p40XO3IA@cluster0.suzi3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri);
 const dbName = 'userDatabase';
 const collectionName = 'health_logs';

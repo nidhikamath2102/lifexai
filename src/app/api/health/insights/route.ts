@@ -5,8 +5,8 @@ import { categorizePurchase, CategorizedPurchase } from '@/utils/financeUtils';
 import { Purchase, Merchant } from '@/types/nessie';
 import { HealthLog } from '@/api/healthApi';
 
-// MongoDB connection from environment variables
-const uri = process.env.MONGODB_URI || "";
+    // MongoDB connection string from environment variables
+const uri = "mongodb+srv://rajatnagarr:PvXjpUN8p40XO3IA@cluster0.suzi3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri);
 const dbName = 'userDatabase';
 // const healthLogsCollection = 'health_logs'; // Not used at this level

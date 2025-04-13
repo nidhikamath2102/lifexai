@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { healthMythsAndFacts } from '@/utils/healthUtils';
 
 // GET /api/health/myths
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Return the predefined list of health myths and facts
     return NextResponse.json(healthMythsAndFacts);

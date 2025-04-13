@@ -1,22 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
-import { getUserHealthLogs, getLatestHealthLog, HealthLog } from '@/api/healthApi';
+import { getUserHealthLogs, getLatestHealthLog } from '@/api/healthApi';
 import { calculateHealthScore, calculateMoodScore, calculateAverageSleep, calculateAverageExercise } from '@/utils/healthUtils';
 
 export default function HealthSummary() {
   const { customerId } = useAuth();
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  
-  // Check for dark mode
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsDarkMode(document.documentElement.classList.contains('dark'));
-    }
-  }, []);
   
   // Fetch health logs
   const { 

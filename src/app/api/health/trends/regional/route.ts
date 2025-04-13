@@ -1,14 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { MongoClient } from 'mongodb';
 
 // MongoDB connection string
 const uri = "mongodb+srv://rajatnagarr:zJww2J53xTOqqi7l@cluster0.suzi3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-const client = new MongoClient(uri);
 const dbName = 'userDatabase';
 const collectionName = 'health_logs';
 
 // GET /api/health/trends/regional
-export async function GET(request: NextRequest) {
+export async function GET() {
   let mongoClient = null;
   
   try {
@@ -20,7 +19,8 @@ export async function GET(request: NextRequest) {
     
     // Aggregate symptoms by region (simplified for hackathon)
     // In a real app, we would use geospatial queries and more sophisticated aggregation
-    const symptomAggregation = await collection.aggregate([
+    // This aggregation is for reference but we use mock data below
+    await collection.aggregate([
       {
         $match: {
           symptoms: { $exists: true, $ne: "" },

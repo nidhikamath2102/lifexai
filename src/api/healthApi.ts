@@ -76,8 +76,20 @@ export const getLatestHealthInsight = async (userId: string): Promise<UserInsigh
   }
 };
 
+// Define the type for regional health trends
+export interface RegionalHealthTrend {
+  region: string;
+  symptoms: Array<{
+    name: string;
+    count: number;
+    trend: 'increasing' | 'decreasing' | 'stable';
+  }>;
+  alert_level: 'low' | 'moderate' | 'high';
+  prediction: string;
+}
+
 // Get regional health trends (for disease prediction)
-export const getRegionalHealthTrends = async (): Promise<any> => {
+export const getRegionalHealthTrends = async (): Promise<RegionalHealthTrend[]> => {
   try {
     console.log('Making API request to /api/health/trends/regional');
     const response = await axios.get('/api/health/trends/regional', {

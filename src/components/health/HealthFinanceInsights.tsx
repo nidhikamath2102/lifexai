@@ -1,21 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
-import { getLatestHealthInsight, getUserHealthInsights, UserInsight } from '@/api/healthApi';
+import { getLatestHealthInsight } from '@/api/healthApi';
 
 export default function HealthFinanceInsights() {
   const { customerId } = useAuth();
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  
-  // Check for dark mode
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsDarkMode(document.documentElement.classList.contains('dark'));
-    }
-  }, []);
   
   // Fetch latest health insight
   const { 

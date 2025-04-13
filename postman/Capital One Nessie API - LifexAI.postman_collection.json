@@ -22,11 +22,7 @@
 					"raw": "{\n  \"first_name\": \"Nidhi\",\n  \"last_name\": \"Sharma\",\n  \"address\": {\n    \"street_number\": \"123\",\n    \"street_name\": \"University Blvd\",\n    \"city\": \"College Park\",\n    \"state\": \"MD\",\n    \"zip\": \"20742\"\n  }\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/customers?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/customers?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -62,11 +58,7 @@
 					"raw": "{\n  \"type\": \"Checking\",\n  \"nickname\": \"Nidhi's Primary Checking\",\n  \"rewards\": 100,\n  \"balance\": 5000.75\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/customers/{{customer_id}}/accounts?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/customers/{{customer_id}}/accounts?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -104,11 +96,7 @@
 					"raw": "{\n  \"type\": \"Savings\",\n  \"nickname\": \"Nidhi's Emergency Fund\",\n  \"rewards\": 50,\n  \"balance\": 15000.50\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/customers/{{customer_id}}/accounts?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/customers/{{customer_id}}/accounts?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -146,11 +134,7 @@
 					"raw": "{\n  \"type\": \"Credit Card\",\n  \"nickname\": \"Nidhi's Rewards Card\",\n  \"rewards\": 500,\n  \"balance\": 2500.25\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/customers/{{customer_id}}/accounts?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/customers/{{customer_id}}/accounts?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -179,11 +163,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/merchants?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/merchants?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -219,11 +199,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec4b\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-01\",\n  \"amount\": 85.75,\n  \"description\": \"Weekly grocery shopping\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -261,11 +237,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec55\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-02\",\n  \"amount\": 5.45,\n  \"description\": \"Morning coffee\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -303,11 +275,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec63\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-03\",\n  \"amount\": 45.00,\n  \"description\": \"Gas\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -345,11 +313,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec55\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-05\",\n  \"amount\": 5.45,\n  \"description\": \"Morning coffee\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -387,11 +351,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec4b\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-08\",\n  \"amount\": 92.18,\n  \"description\": \"Weekly grocery shopping\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -429,11 +389,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec49\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-01\",\n  \"amount\": 67.99,\n  \"description\": \"Household items\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -471,11 +427,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec4f\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-02\",\n  \"amount\": 15.99,\n  \"description\": \"Monthly subscription\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -513,11 +465,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec5f\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-03\",\n  \"amount\": 32.50,\n  \"description\": \"Prescription\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -555,11 +503,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec49\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-05\",\n  \"amount\": 129.99,\n  \"description\": \"Electronics\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -597,11 +541,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec4f\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-03-02\",\n  \"amount\": 15.99,\n  \"description\": \"Monthly subscription\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -639,11 +579,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec49\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-10\",\n  \"amount\": 899.99,\n  \"description\": \"New smartphone\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -681,11 +617,7 @@
 					"raw": "{\n  \"merchant_id\": \"57cf75cea73e494d8675ec4b\",\n  \"medium\": \"balance\",\n  \"purchase_date\": \"2025-04-12\",\n  \"amount\": 312.45,\n  \"description\": \"Party supplies\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -723,11 +655,7 @@
 					"raw": "{\n  \"medium\": \"balance\",\n  \"payee_id\": \"{{savings_account_id}}\",\n  \"amount\": 500.00,\n  \"transaction_date\": \"2025-04-05\",\n  \"description\": \"Monthly savings transfer\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -765,11 +693,7 @@
 					"raw": "{\n  \"medium\": \"balance\",\n  \"payee_id\": \"{{savings_account_id}}\",\n  \"amount\": 500.00,\n  \"transaction_date\": \"2025-03-05\",\n  \"description\": \"Monthly savings transfer\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -807,11 +731,7 @@
 					"raw": "{\n  \"medium\": \"balance\",\n  \"payee_id\": \"{{credit_card_id}}\",\n  \"amount\": 200.00,\n  \"transaction_date\": \"2025-04-10\",\n  \"description\": \"Credit card payment\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -849,11 +769,7 @@
 					"raw": "{\n  \"medium\": \"balance\",\n  \"transaction_date\": \"2025-04-01\",\n  \"status\": \"completed\",\n  \"amount\": 2500.00,\n  \"description\": \"Payroll deposit\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/deposits?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/deposits?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -891,11 +807,7 @@
 					"raw": "{\n  \"medium\": \"balance\",\n  \"transaction_date\": \"2025-04-15\",\n  \"status\": \"completed\",\n  \"amount\": 2500.00,\n  \"description\": \"Payroll deposit\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/deposits?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/deposits?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -933,11 +845,7 @@
 					"raw": "{\n  \"medium\": \"balance\",\n  \"transaction_date\": \"2025-04-05\",\n  \"status\": \"completed\",\n  \"amount\": 200.00,\n  \"description\": \"ATM withdrawal\"\n}"
 				},
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/withdrawals?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/withdrawals?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -966,11 +874,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/customers/{{customer_id}}?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/customers/{{customer_id}}?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -998,11 +902,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/customers/{{customer_id}}/accounts?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/customers/{{customer_id}}/accounts?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -1031,11 +931,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -1064,11 +960,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{credit_card_id}}/purchases?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",
@@ -1097,11 +989,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-<<<<<<< HEAD
-					"raw": "http://api.nessieisreal.com/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
-=======
 					"raw": "https://cool-king-ba1a.nidhikamath.workers.dev/accounts/{{checking_account_id}}/transfers?key={{api_key}}",
->>>>>>> upstream/master
 					"protocol": "http",
 					"host": [
 						"api",

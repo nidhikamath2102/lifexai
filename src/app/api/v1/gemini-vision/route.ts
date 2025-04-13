@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Initialize the Gemini API with the API key from environment variables
-const apiKey = process.env.GEMINI_API_KEY;
-const genAI = new GoogleGenerativeAI(apiKey || '');
+// Initialize the Gemini API with hardcoded API key
+const apiKey = 'AIzaSyDt54Fz9uf_pQFk3CVRalygp4yxhJ97Rj0';
+const genAI = new GoogleGenerativeAI(apiKey);
 
 // Use Gemini 1.5 Flash model for image analysis (as recommended in the error message)
 const modelName = 'gemini-1.5-flash';

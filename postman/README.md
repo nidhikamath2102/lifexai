@@ -158,5 +158,3 @@ Once you've created the data using this collection, you can use it in the LifexA
 2. Using the customer ID and account IDs in the application's API calls
 
 The application will then be able to retrieve and display the data you've created.
-
-<!-- testing -->
